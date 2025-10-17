@@ -35,7 +35,6 @@ public class DepartamentoResource {
     @Path("/criar")
     public Response criarChamado(@Valid Departamento departamento) {
         Departamento departamentoCriado = departamentoService.criarDP(departamento);
-
         return Response.ok().entity(departamentoCriado).build();
     }
 

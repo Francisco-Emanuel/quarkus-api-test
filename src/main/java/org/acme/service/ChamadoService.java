@@ -3,6 +3,7 @@ package org.acme.service;
 import java.time.LocalDateTime;
 
 import org.acme.entity.Chamado;
+import org.acme.entity.Departamento;
 import org.acme.entity.Usuario;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -15,10 +16,11 @@ public class ChamadoService {
     public Chamado abrirChamado(Chamado chamado, String username) {
         Usuario usuario = Usuario.find("name", username).firstResult();
         Chamado novoChamado = new Chamado();
+        Departamento depto = Departamento.findById(chamado.departamento);
         novoChamado.title = chamado.title;
         novoChamado.descr = chamado.descr;
         novoChamado.local = chamado.local;
-        novoChamado.departamento = chamado.departamento;
+        novoChamado.departamento = depto;
         novoChamado.usuario = usuario;
         novoChamado.status = chamado.status;
         novoChamado.dataAbertura = LocalDateTime.now();
