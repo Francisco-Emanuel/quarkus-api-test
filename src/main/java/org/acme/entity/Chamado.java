@@ -1,0 +1,32 @@
+package org.acme.entity;
+
+import java.time.LocalDateTime;
+
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.smallrye.common.constraint.NotNull;
+import jakarta.persistence.Entity;
+
+@Entity
+public class Chamado extends PanacheEntity {
+
+    @NotNull
+    public String title;
+
+    @NotNull
+    public String descr;
+
+    @NotNull
+    public String local;
+
+    @NotNull
+    public String usuario;
+
+    public String tecnico;
+
+    @NotNull
+    public String status;
+
+    public LocalDateTime dataAbertura;
+
+    public LocalDateTime dataFechamento;
+}
