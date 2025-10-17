@@ -15,6 +15,7 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 
 @Path("/chamados")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -23,6 +24,8 @@ public class ChamadoResource {
 
     @Inject
     ChamadoService chamadoService;
+
+    @Inject JsonWebToken jwt;
 
     @GET
     @Authenticated
@@ -33,7 +36,8 @@ public class ChamadoResource {
     @POST
     @Authenticated
     public Response abrirChamado(@Valid Chamado chamado) {
-        Chamado chamadoCriado =  chamadoService.abrirChamado(chamado);
+        String username = jwt.getName();
+        Chamado chamadoCriado =  chamadoService.abrirChamado(chamado, username);
 
         return Response.ok().entity(chamadoCriado).build();
     }

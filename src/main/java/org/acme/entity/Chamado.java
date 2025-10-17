@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.smallrye.common.constraint.NotNull;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Chamado extends PanacheEntity {
@@ -19,7 +20,11 @@ public class Chamado extends PanacheEntity {
     public String local;
 
     @NotNull
-    public Long usuario_id;
+    @ManyToOne
+    public Departamento departamento;
+
+    @ManyToOne
+    public Usuario usuario;
 
     public String tecnico;
 
