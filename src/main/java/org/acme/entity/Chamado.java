@@ -19,7 +19,7 @@ public class Chamado extends PanacheEntity {
     public String local;
 
     @NotNull
-    public String usuario;
+    public Long usuario_id;
 
     public String tecnico;
 

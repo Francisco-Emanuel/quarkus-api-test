@@ -1,15 +1,18 @@
 package org.acme.resource;
 
 import java.time.Duration;
+import java.util.List;
 
 import org.acme.dto.LoginRequestDTO;
 import org.acme.entity.Usuario;
 import org.acme.service.UsuarioService;
 
 import io.quarkus.elytron.security.common.BcryptUtil;
+import io.quarkus.security.Authenticated;
 import io.smallrye.jwt.build.Jwt;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -23,6 +26,12 @@ public class UsuarioResource {
     @Inject
     UsuarioService usuarioService;
 
+    @GET
+    @Authenticated
+    public List<Usuario> listarUsuarios() {
+        return Usuario.listAll();
+    }
+
     @POST
     @Path("/register")
     public Response resgister(LoginRequestDTO request) {
@@ -33,7 +42,7 @@ public class UsuarioResource {
     @POST
     @Path("/login")
     public Response login(LoginRequestDTO request) {
-        Usuario user = Usuario.find("username", request.name).firstResult();
+        Usuario user = Usuario.find("name", request.name).firstResult();
         if (user != null && BcryptUtil.matches(request.password, user.password)) {
             String token = Jwt.issuer("https://acme.org/issuer")
                               .upn(user.name)
