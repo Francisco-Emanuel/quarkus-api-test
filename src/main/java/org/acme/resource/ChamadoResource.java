@@ -2,6 +2,7 @@ package org.acme.resource;
 
 import java.util.List;
 
+import org.acme.dto.ChamadoRequestDTO;
 import org.acme.entity.Chamado;
 import org.acme.service.ChamadoService;
 
@@ -35,7 +36,7 @@ public class ChamadoResource {
 
     @POST
     @Authenticated
-    public Response abrirChamado(@Valid Chamado chamado) {
+    public Response abrirChamado(@Valid ChamadoRequestDTO chamado) {
         String username = jwt.getName();
         Chamado chamadoCriado =  chamadoService.abrirChamado(chamado, username);
 

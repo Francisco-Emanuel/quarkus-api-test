@@ -2,6 +2,7 @@ package org.acme.service;
 
 import java.time.LocalDateTime;
 
+import org.acme.dto.ChamadoRequestDTO;
 import org.acme.entity.Chamado;
 import org.acme.entity.Departamento;
 import org.acme.entity.Usuario;
@@ -13,10 +14,10 @@ import jakarta.transaction.Transactional;
 public class ChamadoService {
 
     @Transactional
-    public Chamado abrirChamado(Chamado chamado, String username) {
+    public Chamado abrirChamado(ChamadoRequestDTO chamado, String username) {
         Usuario usuario = Usuario.find("name", username).firstResult();
         Chamado novoChamado = new Chamado();
-        Departamento depto = Departamento.findById(chamado.departamento);
+        Departamento depto = Departamento.findById(chamado.departamentoId);
         novoChamado.title = chamado.title;
         novoChamado.descr = chamado.descr;
         novoChamado.local = chamado.local;
