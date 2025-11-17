@@ -1,6 +1,7 @@
 package org.acme.service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.acme.dto.ChamadoRequestDTO;
 import org.acme.entity.Chamado;
@@ -29,5 +30,31 @@ public class ChamadoService {
         novoChamado.persist();
 
         return novoChamado;
+    }
+
+    @Transactional
+    public Optional<Chamado> atualizarChamado(Long id, ChamadoRequestDTO dadosNovos) {
+        Optional<Chamado> chamadoExistenteOpt = Chamado.findByIdOptional(id);
+
+        if(chamadoExistenteOpt.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Chamado chamadoExistente = chamadoExistenteOpt.get();
+
+        Departamento novoDepartamento = Departamento.findById(dadosNovos.departamentoId);
+
+        chamadoExistente.title = dadosNovos.title;
+        chamadoExistente.descr = dadosNovos.descr;
+        chamadoExistente.local = dadosNovos.local;
+        chamadoExistente.status = dadosNovos.status;
+        chamadoExistente.departamento = novoDepartamento;
+
+        return Optional.of(chamadoExistente);
+    }
+
+    @Transactional
+    public Boolean delCha(Long id) {
+        return Chamado.deleteById(id);
     }
 }
