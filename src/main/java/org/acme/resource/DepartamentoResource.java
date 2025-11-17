@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
@@ -32,10 +33,17 @@ public class DepartamentoResource {
     }
 
     @POST
+    @Authenticated
     @Path("/criar")
-    public Response criarChamado(@Valid Departamento departamento) {
+    public Response criarDepartamento(@Valid Departamento departamento) {
         Departamento departamentoCriado = departamentoService.criarDP(departamento);
         return Response.ok().entity(departamentoCriado).build();
     }
 
+    @PUT
+    @Authenticated
+    @Path("/atualizar")
+    public Response atualizarDP(Long id, @Valid Departamento dadosNovos) {
+        
+    }
 }
